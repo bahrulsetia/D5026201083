@@ -11,7 +11,12 @@ class PendapatanController extends Controller
     public function index()
     {
     	// mengambil data dari table pendapatan
-    	$pendapatan = DB::table('pendapatan')->get();
+    	// $pendapatan = DB::table('pendapatan')->get();
+        // $pendapatan = DB::table('pendapatan')->paginate(5);
+        $pendapatan = DB::table('pendapatan')
+        ->join('pegawai', 'pendapatan.pendapatan_id', '=', 'pegawai.pegawai_id')
+        ->select('pendapatan.*', 'pegawai.pegawai_nama')
+        ->paginate(3);
 
     	// mengirim data pendapatan ke view index
     	return view('pendapatan.index',['pendapatan' => $pendapatan]);
@@ -21,7 +26,8 @@ public function tambah()
 {
 
 	// memanggil view tambah
-	return view('pendapatan.tambah');
+    $pegawai = DB::table('pegawai')->orderBy('pegawai_nama', 'asc')->get();
+	return view('pendapatan.tambah',  ['pegawai' => $pegawai]);
 
 }
 // method untuk insert data ke table pendapatan
@@ -29,7 +35,6 @@ public function store(Request $request)
 {
 	// insert data ke table pegawai
 	DB::table('pendapatan')->insert([
-		'pendapatan_idpegawai' => $request->idpegawai,
 		'pendapatan_bulan' => $request->bulan,
 		'pendapatan_tahun' => $request->tahun,
 		'pendapatan_gaji' => $request->gaji,
@@ -52,7 +57,6 @@ public function update(Request $request)
 {
 	// update data pendapatan
 	DB::table('pendapatan')->where('pendapatan_id',$request->id)->update([
-		'pendapatan_idpegawai' => $request->idpegawai,
 		'pendapatan_bulan' => $request->bulan,
 		'pendapatan_tahun' => $request->tahun,
 		'pendapatan_gaji' => $request->gaji,

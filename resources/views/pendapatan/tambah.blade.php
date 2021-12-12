@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Tutorial Membuat CRUD Pada Laravel - www.malasngoding.com</title>
-</head>
-<body>
+@extends('layout.bahagia')
 
-	<h2><a href="https://www.malasngoding.com">www.malasngoding.com</a></h2>
+@section('isikonten')
+
+	<h2><a href="https://www.malasngoding.com"></a></h2>
 	<h3>Data Pendapatan</h3>
 
 	<a href="/pendapatan"> Kembali</a>
@@ -15,13 +12,17 @@
 
 	<form action="/pendapatan/store" method="post">
 		{{ csrf_field() }}
-		IDPegawai <input type="number" name="idpegawai" required="required"> <br/>
-		Bulan <input type="number" name="bulan" required="required"> <br/>
-		Tahun <input type="number" name="tahun" required="required"> <br/>
-		Gaji <input type="number" name="gaji" required="required"> <br/>
-        Tunjangan <input type="number" name="tunjangan" required="required"> <br/>
+        Pegawai : <select id="idpegawai" name="idpegawai" required="required">
+            @foreach($pegawai as $p)
+                <option value="{{ $p->pegawai_id }}"> {{ $p->pegawai_nama }}</option>
+            @endforeach
+        </select><br>
+
+		Bulan : <input type="number" name="bulan" required="required"> <br/>
+		Tahun : <input type="number" name="tahun" required="required"> <br/>
+		Gaji : <input type="number" name="gaji" required="required"> <br/>
+        Tunjangan : <input type="number" name="tunjangan" required="required"> <br/><br>
 		<input type="submit" value="Simpan Data">
 	</form>
 
-</body>
-</html>
+@endsection
