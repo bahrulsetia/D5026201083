@@ -75,3 +75,6 @@ Route::get('/agen/hapus/{id}','AgenController@hapus');
 
 Route::get('/agen/cari','AgenController@cari');
 Route::get('/agen/detail/{id}','AgenController@view');
+
+
+Route::get('/eas','EasController@index');
